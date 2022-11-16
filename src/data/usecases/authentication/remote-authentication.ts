@@ -1,4 +1,5 @@
-import { HttpPostClient } from '@/data/protocols/http'
+import { HttpPostClient, HttpResponseStatus } from '@/data/protocols/http'
+import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 export type AuthenticationParams = {
   email: string
@@ -12,6 +13,14 @@ export class RemoteAuthentication {
   ) {}
 
   async auth(params: AuthenticationParams): Promise<void> {
-    return await this.httpClient.post({ url: this.url, body: params })
+    const response = await this.httpClient.post({ url: this.url, body: params })
+    switch (response.statusCode) {
+      case HttpResponseStatus.Success:
+        break
+      case HttpResponseStatus.Unauthorized:
+        throw new InvalidCredentialsError()
+      default:
+        throw new UnexpectedError()
+    }
   }
 }
