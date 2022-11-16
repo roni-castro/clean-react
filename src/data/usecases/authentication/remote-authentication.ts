@@ -1,4 +1,4 @@
-import { HttpPostClient } from '../../protocols/http'
+import { HttpPostClient } from '@/data/protocols/http'
 
 export type AuthenticationParams = {
   email: string
