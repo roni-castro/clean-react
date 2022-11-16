@@ -5,6 +5,7 @@ export enum HttpResponseStatus {
   Success = 200
 }
 
-export interface HttpResponse {
+export interface HttpResponse<TResponseData> {
   statusCode: HttpResponseStatus
+  data?: TResponseData
 }
