@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker'
+import { AuthenticationParams } from '@/domain/usecases'
 import { AccountModel } from '../models'
-
-import { AuthenticationParams } from '@/domain/usecases/authentication'
 
 export function makeAuthentication(): AuthenticationParams {
   return {
