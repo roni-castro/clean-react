@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { makeAuthentication } from '@/domain/test'
+import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
+import { HttpResponseStatus } from '@/data/protocols/http'
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import { RemoteAuthentication } from './remote-authentication'
 
@@ -25,5 +27,35 @@ describe('RemoteAuthentication', () => {
     await sut.auth(authenticationParams)
     expect(httpPostClientSpy.url).toBe(url)
     expect(httpPostClientSpy.body).toBe(authenticationParams)
+  })
+
+  it('should throw InvalidCredentialsError on 401 error', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpResponseStatus.Unauthorized
+    }
+    await expect(sut.auth(makeAuthentication())).rejects.toThrow(
+      new InvalidCredentialsError()
+    )
+  })
+
+  it('should throw UnexpectedError on 404 error', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpResponseStatus.NotFound
+    }
+    await expect(sut.auth(makeAuthentication())).rejects.toThrow(
+      new UnexpectedError()
+    )
+  })
+
+  it('should throw UnexpectedError on 500 error', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpResponseStatus.ServerError
+    }
+    await expect(sut.auth(makeAuthentication())).rejects.toThrow(
+      new UnexpectedError()
+    )
   })
 })
