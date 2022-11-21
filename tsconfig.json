@@ -16,8 +16,7 @@
     "allowUnreachableCode": false, // pick up dead code paths
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "noEmit": true
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }

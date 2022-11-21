@@ -1,0 +1,126 @@
+@import '../../styles/colors.scss';
+
+input {
+  border: 1px solid $primary;
+  line-height: 40px;
+  border-radius: 4px;
+  padding: 0px 40px 0px 8px;
+
+  &:focus {
+    outline-color: $primary;
+  }
+}
+
+button {
+  background-color: $primary;
+  color: $white;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.loginWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  background-color: $background;
+
+  .headerWrap {
+    display: flex;
+    flex-direction: column;
+    border-top: 40px solid $primaryDark;
+    background-color: $primary;
+    align-items: center;
+    justify-content: center;
+
+    .headerLogo {
+      width: 80px;
+      margin-top: 24px;
+    }
+
+    h1 {
+      color: $white;
+      margin: 16px 0px 40px;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    width: 400px;
+    align-self: center;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px -1px $black;
+
+    h2 {
+      color: $primaryDark;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .inputWrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-top: 16px;
+
+      input {
+        flex-grow: 1;
+      }
+
+      .status {
+        position: absolute;
+        right: 8px;
+        font-size: 12px;
+        cursor: help;
+      }
+    }
+
+    .submit {
+      margin-top: 32px;
+    }
+  }
+
+  .link {
+    text-align: center;
+    color: $primary;
+    text-transform: lowercase;
+    text-decoration: none;
+    margin-top: 16px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .errorWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .spinner {
+      margin-top: 30px;
+    }
+
+    .error {
+      margin-top: 30px;
+      color: $primary;
+    }
+  }
+
+  .footer {
+    height: 48px;
+    background-color: $primary;
+  }
+}
