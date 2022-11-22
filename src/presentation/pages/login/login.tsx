@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spinner } from '@/presentation/components'
-import Styles from './styles.scss'
+import Styles from './login-styles.scss'
 
 export const Login = () => {
   return (
