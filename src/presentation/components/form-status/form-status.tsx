@@ -21,7 +21,7 @@ const FormStatus = ({
           className={Styles.spinner}
         />
       )}
-      {state.errorState.errorMessage ? (
+      {state.errorState.main ? (
         <span data-testid={`${dataTestId}-error`} className={Styles.error}>
           Erro
         </span>

@@ -14,7 +14,7 @@ export const Login = () => {
     errorState: {
       email: 'Campo obrigatório',
       password: 'Campo obrigatório',
-      errorMessage: ''
+      main: ''
     }
   })
 
