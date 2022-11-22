@@ -26,7 +26,7 @@ export const Login = () => {
             name='password'
             placeholder='Digite sua senha'
           />
-          <button className={Styles.submit} type='submit'>
+          <button disabled className={Styles.submit} type='submit'>
             Entrar
           </button>
           <a className={Styles.link} href='#'>

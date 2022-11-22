@@ -8,5 +8,6 @@ module.exports = {
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
     '\\.scss$': 'identity-obj-proxy'
-  }
+  },
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect']
 }

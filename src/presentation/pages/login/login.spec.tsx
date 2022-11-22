@@ -8,5 +8,6 @@ describe('Login', () => {
 
     expect(screen.queryByTestId('login-spinner')).toBeFalsy()
     expect(screen.queryByTestId('login-error')).toBeFalsy()
+    expect(screen.getByRole('button', { name: 'Entrar' })).toBeDisabled()
   })
 })
