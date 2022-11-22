@@ -7,10 +7,16 @@ export type FormContextState = {
     email: string
     password: string
   }
+  email: string
+}
+
+type FormContextValue = {
+  state: FormContextState
+  setState: React.Dispatch<React.SetStateAction<FormContextState>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const FormContext = createContext<FormContextState | null>(null)
+const FormContext = createContext<FormContextValue | null>(null)
 
 const useLoginForm = () => {
   const context = useContext(FormContext)

@@ -11,7 +11,7 @@ const FormStatus = ({
   'data-testid': dataTestId,
   ...props
 }: FormStatusProps) => {
-  const state = useLoginForm()
+  const { state } = useLoginForm()
 
   return (
     <div className={Styles.errorWrap} {...props}>
