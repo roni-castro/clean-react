@@ -2,7 +2,11 @@ import { createContext, useContext } from 'react'
 
 export type FormContextState = {
   isLoading: boolean
-  errorMessage: string
+  errorState: {
+    errorMessage: string
+    email: string
+    password: string
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

@@ -11,7 +11,11 @@ import Styles from './login-styles.scss'
 export const Login = () => {
   const [state] = useState({
     isLoading: false,
-    errorMessage: ''
+    errorState: {
+      email: 'Campo obrigatório',
+      password: 'Campo obrigatório',
+      errorMessage: ''
+    }
   })
 
   return (
@@ -20,11 +24,19 @@ export const Login = () => {
       <FormContext.Provider value={state}>
         <form className={Styles.form}>
           <h2>Login</h2>
-          <Input type='email' name='email' placeholder='Digite seu e-mail' />
           <Input
+            data-testid='email'
+            type='email'
+            name='email'
+            placeholder='Digite seu e-mail'
+            errorMessage={state.errorState.email}
+          />
+          <Input
+            data-testid='password'
             type='password'
             name='password'
             placeholder='Digite sua senha'
+            errorMessage={state.errorState.password}
           />
           <button disabled className={Styles.submit} type='submit'>
             Entrar
