@@ -1,16 +1,5 @@
 @import '../../styles/colors.scss';
 
-input {
-  border: 1px solid $primary;
-  line-height: 40px;
-  border-radius: 4px;
-  padding: 0px 40px 0px 8px;
-
-  &:focus {
-    outline-color: $primary;
-  }
-}
-
 button {
   background-color: $primary;
   color: $white;
@@ -47,24 +36,6 @@ button {
       text-align: center;
       text-transform: uppercase;
       margin-bottom: 8px;
-    }
-
-    .inputWrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 16px;
-
-      input {
-        flex-grow: 1;
-      }
-
-      .status {
-        position: absolute;
-        right: 8px;
-        font-size: 12px;
-        cursor: help;
-      }
     }
 
     .submit {

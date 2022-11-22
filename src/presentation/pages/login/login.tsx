@@ -1,5 +1,5 @@
 import React from 'react'
-import { Footer, LoginHeader, Spinner } from '@/presentation/components'
+import { Footer, Input, LoginHeader, Spinner } from '@/presentation/components'
 import Styles from './login-styles.scss'
 
 export const Login = () => {
@@ -8,14 +8,8 @@ export const Login = () => {
       <LoginHeader />
       <form className={Styles.form}>
         <h2>Login</h2>
-        <div className={Styles.inputWrap}>
-          <input type='email' name='email' placeholder='Email' />
-          <span className={Styles.status}>🔴</span>
-        </div>
-        <div className={Styles.inputWrap}>
-          <input type='password' name='password' placeholder='Password' />
-          <span className={Styles.status}>🔴</span>
-        </div>
+        <Input type='email' name='email' placeholder='Digite seu e-mail' />
+        <Input type='password' name='password' placeholder='Digite sua senha' />
         <button className={Styles.submit} type='submit'>
           Entrar
         </button>
