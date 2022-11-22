@@ -1,12 +1,33 @@
 import React from 'react'
 import { Spinner } from '@/presentation/components'
+import { useLoginForm } from '@/presentation/contexts'
 import Styles from './form-status-styles.scss'
 
-const FormStatus = () => (
-  <div className={Styles.errorWrap}>
-    <Spinner className={Styles.spinner} />
-    <span className={Styles.error}>Erro</span>
-  </div>
-)
+type FormStatusProps = {
+  'data-testid': string
+}
+
+const FormStatus = ({
+  'data-testid': dataTestId,
+  ...props
+}: FormStatusProps) => {
+  const state = useLoginForm()
+
+  return (
+    <div className={Styles.errorWrap} {...props}>
+      {state.isLoading && (
+        <Spinner
+          data-testid={`${dataTestId}-spinner`}
+          className={Styles.spinner}
+        />
+      )}
+      {state.errorMessage ? (
+        <span data-testid={`${dataTestId}-error`} className={Styles.error}>
+          Erro
+        </span>
+      ) : null}
+    </div>
+  )
+}
 
 export default FormStatus
