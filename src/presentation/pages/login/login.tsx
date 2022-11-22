@@ -1,5 +1,10 @@
 import React from 'react'
-import { Footer, Input, LoginHeader, Spinner } from '@/presentation/components'
+import {
+  Footer,
+  Input,
+  LoginHeader,
+  FormStatus
+} from '@/presentation/components'
 import Styles from './login-styles.scss'
 
 export const Login = () => {
@@ -16,10 +21,7 @@ export const Login = () => {
         <a className={Styles.link} href='#'>
           Criar conta
         </a>
-        <div className={Styles.errorWrap}>
-          <Spinner className={Styles.spinner} />
-          <span className={Styles.error}>Erro</span>
-        </div>
+        <FormStatus />
       </form>
       <Footer />
     </div>
