@@ -19,7 +19,9 @@ const Input = ({
   const enableInput = (event: React.FocusEvent<HTMLInputElement>) => {
     event.target.readOnly = false
   }
-  const getStatus = () => '🔴'
+  const getStatus = () => (errorMessage ? '🔴' : '🟢')
+
+  const getTitle = () => errorMessage || 'Tudo certo'
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({
@@ -38,7 +40,7 @@ const Input = ({
         onFocus={enableInput}
       />
       <span
-        title={errorMessage}
+        title={getTitle()}
         data-testid={`${dataTestId}-status`}
         className={Styles.status}
       >

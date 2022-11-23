@@ -39,8 +39,8 @@ export const Login = ({ validation }: LoginProps) => {
   }
 
   useEffect(() => {
-    validate('email', state.email)
     validate('password', state.password)
+    validate('email', state.email)
   }, [state.email, state.password])
 
   return (
