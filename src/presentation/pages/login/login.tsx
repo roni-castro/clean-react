@@ -25,21 +25,22 @@ export const Login = ({ validation }: LoginProps) => {
     }
   })
 
-  useEffect(() => {
+  const validate = (fieldName: string, fieldValue: string) => {
     setState((old) => ({
       ...old,
       errorState: {
         ...old.errorState,
-        email: validation.validate({
-          fieldName: 'email',
-          fieldValue: state.email
-        }),
-        password: validation.validate({
-          fieldName: 'password',
-          fieldValue: state.password
+        [fieldName]: validation.validate({
+          fieldName,
+          fieldValue
         })
       }
     }))
+  }
+
+  useEffect(() => {
+    validate('email', state.email)
+    validate('password', state.password)
   }, [state.email, state.password])
 
   return (
