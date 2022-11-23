@@ -17,6 +17,7 @@ export const Login = ({ validation }: LoginProps) => {
   const [state, setState] = useState({
     isLoading: false,
     email: '',
+    password: '',
     errorState: {
       email: 'Campo obrigatório',
       password: 'Campo obrigatório',
@@ -25,7 +26,7 @@ export const Login = ({ validation }: LoginProps) => {
   })
 
   useEffect(() => {
-    validation.validate({ email: state.email })
+    validation.validate({ email: state.email, password: state.password })
   }, [state])
 
   return (

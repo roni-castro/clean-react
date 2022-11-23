@@ -8,6 +8,7 @@ export type FormContextState = {
     password: string
   }
   email: string
+  password: string
 }
 
 type FormContextValue = {

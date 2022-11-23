@@ -45,6 +45,16 @@ describe('Login', () => {
 
     await userEvent.type(emailInput, email)
 
-    expect(validationSpy.input).toEqual({ email })
+    expect(validationSpy.input).toEqual({ email, password: '' })
+  })
+
+  it('should call Validation with correct password', async () => {
+    const { validationSpy } = makeSut()
+    const password = faker.internet.password()
+    const passwordInput = screen.getByTestId('password')
+
+    await userEvent.type(passwordInput, password)
+
+    expect(validationSpy.input).toEqual({ email: '', password })
   })
 })
