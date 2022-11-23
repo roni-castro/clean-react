@@ -1,11 +1,19 @@
 import { Validation } from '../protocols'
 
 export class ValidationSpy implements Validation {
-  input?: object
+  fieldName?: string
+  fieldValue?: string
   errorMessage?: string
 
-  validate(input: object) {
-    this.input = input
+  validate({
+    fieldName,
+    fieldValue
+  }: {
+    fieldName: string
+    fieldValue: string
+  }) {
+    this.fieldName = fieldName
+    this.fieldValue = fieldValue
 
     return this.errorMessage
   }

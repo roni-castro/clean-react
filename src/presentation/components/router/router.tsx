@@ -3,10 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Login } from '@/presentation/pages'
 
 class Validation {
-  input?: object
-  errorMessage?: string
-
-  validate(input: object) {}
+  validate() {}
 }
 
 export default function Router() {

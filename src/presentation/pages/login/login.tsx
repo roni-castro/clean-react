@@ -26,8 +26,9 @@ export const Login = ({ validation }: LoginProps) => {
   })
 
   useEffect(() => {
-    validation.validate({ email: state.email, password: state.password })
-  }, [state])
+    validation.validate({ fieldName: 'email', fieldValue: state.email })
+    validation.validate({ fieldName: 'password', fieldValue: state.password })
+  }, [state.email, state.password])
 
   return (
     <div className={Styles.loginWrap}>

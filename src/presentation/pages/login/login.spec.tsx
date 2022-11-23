@@ -1,7 +1,5 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { faker } from '@faker-js/faker'
 import { ValidationSpy } from '@/presentation/tests'
 import { Login } from './login'
 
@@ -25,25 +23,5 @@ describe('Login', () => {
     const passwordStatus = screen.getByTestId('password-status')
     expect(passwordStatus).toHaveTextContent('🔴')
     expect(passwordStatus.title).toBe('Campo obrigatório')
-  })
-
-  it('should call Validation with correct email', async () => {
-    const { validationSpy } = makeSut()
-    const email = faker.internet.email()
-    const emailInput = screen.getByTestId('email')
-
-    await userEvent.type(emailInput, email)
-
-    expect(validationSpy.input).toEqual({ email, password: '' })
-  })
-
-  it('should call Validation with correct password', async () => {
-    const { validationSpy } = makeSut()
-    const password = faker.internet.password()
-    const passwordInput = screen.getByTestId('password')
-
-    await userEvent.type(passwordInput, password)
-
-    expect(validationSpy.input).toEqual({ email: '', password })
   })
 })
