@@ -2,19 +2,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
-import { Validation } from '@/presentation/protocols'
+import { ValidationSpy } from '@/presentation/tests'
 import { Login } from './login'
-
-class ValidationSpy implements Validation {
-  input?: object
-  errorMessage?: string
-
-  validate(input: object) {
-    this.input = input
-
-    return this.errorMessage
-  }
-}
 
 const makeSut = () => {
   const validationSpy = new ValidationSpy()
