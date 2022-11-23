@@ -1,9 +1,9 @@
 import { Validation } from '../protocols'
 
 export class ValidationSpy implements Validation {
+  errorMessage: string = ''
   fieldName?: string
   fieldValue?: string
-  errorMessage?: string
 
   validate({
     fieldName,

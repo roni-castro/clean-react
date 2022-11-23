@@ -3,7 +3,9 @@ import { Routes, Route } from 'react-router-dom'
 import { Login } from '@/presentation/pages'
 
 class Validation {
-  validate() {}
+  validate() {
+    return ''
+  }
 }
 
 export default function Router() {

@@ -5,5 +5,5 @@ export interface Validation {
   }: {
     fieldName: string
     fieldValue: string
-  }) => void
+  }) => string
 }

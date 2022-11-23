@@ -5,7 +5,7 @@ import {
   LoginHeader,
   FormStatus
 } from '@/presentation/components'
-import { FormContext } from '@/presentation/contexts'
+import { FormContext, FormContextState } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import Styles from './login-styles.scss'
 
@@ -14,20 +14,32 @@ type LoginProps = {
 }
 
 export const Login = ({ validation }: LoginProps) => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<FormContextState>({
     isLoading: false,
     email: '',
     password: '',
     errorState: {
-      email: 'Campo obrigatório',
-      password: 'Campo obrigatório',
+      email: '',
+      password: '',
       main: ''
     }
   })
 
   useEffect(() => {
-    validation.validate({ fieldName: 'email', fieldValue: state.email })
-    validation.validate({ fieldName: 'password', fieldValue: state.password })
+    setState((old) => ({
+      ...old,
+      errorState: {
+        ...old.errorState,
+        email: validation.validate({
+          fieldName: 'email',
+          fieldValue: state.email
+        }),
+        password: validation.validate({
+          fieldName: 'password',
+          fieldValue: state.password
+        })
+      }
+    }))
   }, [state.email, state.password])
 
   return (
