@@ -62,4 +62,14 @@ describe('Login', () => {
     expect(passwordStatus).toHaveTextContent('🟢')
     expect(passwordStatus.title).toBe('Tudo certo')
   })
+
+  it('should show valid email state if Validation succeeds', async () => {
+    const { validationSpy } = makeSut()
+    validationSpy.errorMessage = ''
+    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
+
+    const emailStatus = screen.getByTestId('email-status')
+    expect(emailStatus).toHaveTextContent('🟢')
+    expect(emailStatus.title).toBe('Tudo certo')
+  })
 })
