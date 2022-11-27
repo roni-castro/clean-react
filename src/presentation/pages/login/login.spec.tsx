@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
@@ -20,6 +20,36 @@ const makeSut = (params?: SutType) => {
   return { sut, validationSpy, authenticationSpy }
 }
 
+const simulateValidSubmit = async (params?: {
+  email: string
+  password: string
+}) => {
+  const email = params?.email ?? faker.internet.email()
+  const password = params?.password ?? faker.internet.password()
+  await userEvent.type(screen.getByTestId('email'), email)
+  await userEvent.type(screen.getByTestId('password'), password)
+  const submitButton = await screen.findByRole('button', { name: 'Entrar' })
+  await userEvent.click(submitButton)
+
+  return { email, password, submitButton }
+}
+
+const checkFormErrorStatus = (
+  formStatus: HTMLElement,
+  errorMessage: string
+) => {
+  expect(formStatus).toHaveTextContent('🔴')
+  expect(formStatus.title).toBe(errorMessage)
+}
+
+const checkFormSuccessStatus = (
+  formStatus: HTMLElement,
+  successMessage: string = 'Tudo certo'
+) => {
+  expect(formStatus).toHaveTextContent('🟢')
+  expect(formStatus.title).toBe(successMessage)
+}
+
 describe('Login', () => {
   it('should start with initial state', () => {
     const errorMessage = faker.random.words()
@@ -29,12 +59,10 @@ describe('Login', () => {
     expect(screen.getByRole('button', { name: 'Entrar' })).toBeDisabled()
 
     const emailStatus = screen.getByTestId('email-status')
-    expect(emailStatus).toHaveTextContent('🔴')
-    expect(emailStatus.title).toBe(errorMessage)
+    checkFormErrorStatus(emailStatus, errorMessage)
 
     const passwordStatus = screen.getByTestId('password-status')
-    expect(passwordStatus).toHaveTextContent('🔴')
-    expect(passwordStatus.title).toBe(errorMessage)
+    checkFormErrorStatus(passwordStatus, errorMessage)
   })
 
   it('should show a validation error for an invalid email', async () => {
@@ -44,8 +72,7 @@ describe('Login', () => {
     await userEvent.type(screen.getByTestId('email'), 'invalid_email')
 
     const emailStatus = screen.getByTestId('email-status')
-    expect(emailStatus).toHaveTextContent('🔴')
-    expect(emailStatus.title).toBe(errorMessage)
+    checkFormErrorStatus(emailStatus, errorMessage)
   })
 
   it('should show a validation error for an invalid password', async () => {
@@ -55,8 +82,7 @@ describe('Login', () => {
     await userEvent.type(screen.getByTestId('password'), '1')
 
     const passwordStatus = screen.getByTestId('password-status')
-    expect(passwordStatus).toHaveTextContent('🔴')
-    expect(passwordStatus.title).toBe(errorMessage)
+    checkFormErrorStatus(passwordStatus, errorMessage)
   })
 
   it('should show valid password state if Validation succeeds', async () => {
@@ -68,8 +94,7 @@ describe('Login', () => {
     )
 
     const passwordStatus = screen.getByTestId('password-status')
-    expect(passwordStatus).toHaveTextContent('🟢')
-    expect(passwordStatus.title).toBe('Tudo certo')
+    checkFormSuccessStatus(passwordStatus)
   })
 
   it('should show valid email state if Validation succeeds', async () => {
@@ -78,32 +103,21 @@ describe('Login', () => {
     await userEvent.type(screen.getByTestId('email'), faker.internet.email())
 
     const emailStatus = screen.getByTestId('email-status')
-    expect(emailStatus).toHaveTextContent('🟢')
-    expect(emailStatus.title).toBe('Tudo certo')
+    checkFormSuccessStatus(emailStatus)
   })
 
   it('should enable submit button if form is valid', async () => {
     makeSut()
 
-    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
-    await userEvent.type(
-      screen.getByTestId('password'),
-      faker.internet.password()
-    )
+    const { submitButton } = await simulateValidSubmit()
 
-    expect(await screen.findByRole('button', { name: 'Entrar' })).toBeEnabled()
+    await waitFor(() => expect(submitButton).toBeEnabled())
   })
 
   it('should show spinner on submit', async () => {
     makeSut()
 
-    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
-    await userEvent.type(
-      screen.getByTestId('password'),
-      faker.internet.password()
-    )
-    const submitButton = await screen.findByRole('button', { name: 'Entrar' })
-    await userEvent.click(submitButton)
+    await simulateValidSubmit()
 
     expect(await screen.findByTestId('login-spinner')).toBeInTheDocument()
   })
@@ -111,12 +125,7 @@ describe('Login', () => {
   it('should call Authentication with correct params', async () => {
     const { authenticationSpy } = makeSut()
 
-    const email = faker.internet.email()
-    const password = faker.internet.password()
-    await userEvent.type(screen.getByTestId('email'), email)
-    await userEvent.type(screen.getByTestId('password'), password)
-    const submitButton = await screen.findByRole('button', { name: 'Entrar' })
-    await userEvent.click(submitButton)
+    const { email, password } = await simulateValidSubmit()
 
     expect(authenticationSpy.params).toEqual({ email, password })
   })
