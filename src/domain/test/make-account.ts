@@ -9,7 +9,7 @@ export function makeAuthentication(): AuthenticationParams {
   }
 }
 
-export function makeAccountModel(): AccountModel {
+export function mockAccountModel(): AccountModel {
   return {
     accessToken: faker.datatype.uuid()
   }
