@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
-import { ValidationSpy } from '@/presentation/tests'
+import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
 import { Login } from './login'
 
 type SutType = {
@@ -12,9 +12,12 @@ type SutType = {
 const makeSut = (params?: SutType) => {
   const validationSpy = new ValidationSpy()
   validationSpy.errorMessage = params?.validationError
+  const authenticationSpy = new AuthenticationSpy()
 
-  const sut = render(<Login validation={validationSpy} />)
-  return { sut, validationSpy }
+  const sut = render(
+    <Login validation={validationSpy} authentication={authenticationSpy} />
+  )
+  return { sut, validationSpy, authenticationSpy }
 }
 
 describe('Login', () => {
@@ -103,5 +106,18 @@ describe('Login', () => {
     await userEvent.click(submitButton)
 
     expect(await screen.findByTestId('login-spinner')).toBeInTheDocument()
+  })
+
+  it('should call Authentication with correct params', async () => {
+    const { authenticationSpy } = makeSut()
+
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+    await userEvent.type(screen.getByTestId('email'), email)
+    await userEvent.type(screen.getByTestId('password'), password)
+    const submitButton = await screen.findByRole('button', { name: 'Entrar' })
+    await userEvent.click(submitButton)
+
+    expect(authenticationSpy.params).toEqual({ email, password })
   })
 })
