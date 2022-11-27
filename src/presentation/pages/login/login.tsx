@@ -26,6 +26,11 @@ export const Login = ({ validation }: LoginProps) => {
     }
   })
 
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setState((old) => ({ ...old, isLoading: true }))
+  }
+
   const validate = (fieldName: string, fieldValue: string) => {
     setState((old) => ({
       ...old,
@@ -55,7 +60,7 @@ export const Login = ({ validation }: LoginProps) => {
     <div className={Styles.loginWrap}>
       <LoginHeader />
       <FormContext.Provider value={{ state, setState }}>
-        <form className={Styles.form}>
+        <form className={Styles.form} onSubmit={handleOnSubmit}>
           <h2>Login</h2>
           <Input
             data-testid='email'

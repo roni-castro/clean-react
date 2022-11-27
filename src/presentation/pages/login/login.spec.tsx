@@ -90,4 +90,18 @@ describe('Login', () => {
 
     expect(await screen.findByRole('button', { name: 'Entrar' })).toBeEnabled()
   })
+
+  it('should show spinner on submit', async () => {
+    makeSut()
+
+    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
+    await userEvent.type(
+      screen.getByTestId('password'),
+      faker.internet.password()
+    )
+    const submitButton = await screen.findByRole('button', { name: 'Entrar' })
+    await userEvent.click(submitButton)
+
+    expect(await screen.findByTestId('login-spinner')).toBeInTheDocument()
+  })
 })
