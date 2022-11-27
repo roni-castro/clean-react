@@ -16,6 +16,7 @@ type LoginProps = {
 export const Login = ({ validation }: LoginProps) => {
   const [state, setState] = useState<FormContextState>({
     isLoading: false,
+    isFormError: false,
     email: '',
     password: '',
     errorState: {
@@ -43,6 +44,13 @@ export const Login = ({ validation }: LoginProps) => {
     validate('email', state.email)
   }, [state.email, state.password])
 
+  useEffect(() => {
+    setState((old) => ({
+      ...old,
+      isFormError: Boolean(state.errorState.email || state.errorState.password)
+    }))
+  }, [state.errorState.email, state.errorState.password])
+
   return (
     <div className={Styles.loginWrap}>
       <LoginHeader />
@@ -63,7 +71,11 @@ export const Login = ({ validation }: LoginProps) => {
             placeholder='Digite sua senha'
             errorMessage={state.errorState.password}
           />
-          <button disabled className={Styles.submit} type='submit'>
+          <button
+            disabled={state.isFormError}
+            className={Styles.submit}
+            type='submit'
+          >
             Entrar
           </button>
           <a className={Styles.link} href='#'>

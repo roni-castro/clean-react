@@ -78,4 +78,16 @@ describe('Login', () => {
     expect(emailStatus).toHaveTextContent('🟢')
     expect(emailStatus.title).toBe('Tudo certo')
   })
+
+  it('should enable submit button if form is valid', async () => {
+    makeSut()
+
+    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
+    await userEvent.type(
+      screen.getByTestId('password'),
+      faker.internet.password()
+    )
+
+    expect(await screen.findByRole('button', { name: 'Entrar' })).toBeEnabled()
+  })
 })
