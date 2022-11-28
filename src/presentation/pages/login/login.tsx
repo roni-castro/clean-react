@@ -38,7 +38,8 @@ export const Login = ({ validation, authentication }: LoginProps) => {
         email: state.email,
         password: state.password
       }
-      await authentication.auth(data)
+      const account = await authentication.auth(data)
+      localStorage.setItem('accessToken', account.accessToken)
     } catch (error: any) {
       setState((old) => ({
         ...old,
