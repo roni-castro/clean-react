@@ -129,4 +129,13 @@ describe('Login', () => {
 
     expect(authenticationSpy.params).toEqual({ email, password })
   })
+
+  it('should call Authentication login only once', async () => {
+    const { authenticationSpy } = makeSut()
+
+    const { submitButton } = await simulateValidSubmit()
+    await userEvent.click(submitButton)
+
+    expect(authenticationSpy.callsCount).toBe(1)
+  })
 })
