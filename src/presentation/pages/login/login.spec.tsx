@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
+import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from './login'
 
 type SutType = {
@@ -149,5 +150,18 @@ describe('Login', () => {
     await userEvent.click(submitButton)
 
     expect(authenticationSpy.callsCount).toBe(0)
+  })
+
+  it('should show error and hide spinner if Authentication fails', async () => {
+    const { authenticationSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
+
+    await simulateValidSubmit()
+
+    expect(await screen.findByTestId('login-error')).toHaveTextContent(
+      error.message
+    )
+    expect(screen.queryByTestId('login-spinner')).not.toBeInTheDocument()
   })
 })
