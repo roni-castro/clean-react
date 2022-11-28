@@ -164,4 +164,15 @@ describe('Login', () => {
     )
     expect(screen.queryByTestId('login-spinner')).not.toBeInTheDocument()
   })
+
+  it('should save accessToken to localStorage on authentication success', async () => {
+    const { authenticationSpy } = makeSut()
+
+    await simulateValidSubmit()
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accessToken
+    )
+  })
 })
