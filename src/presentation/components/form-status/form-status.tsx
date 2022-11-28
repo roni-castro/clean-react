@@ -21,9 +21,9 @@ const FormStatus = ({
           className={Styles.spinner}
         />
       )}
-      {state.errorState.main ? (
+      {state.mainError ? (
         <span data-testid={`${dataTestId}-error`} className={Styles.error}>
-          Erro
+          {state.mainError}
         </span>
       ) : null}
     </div>

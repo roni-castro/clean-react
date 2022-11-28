@@ -3,8 +3,8 @@ import { createContext, useContext } from 'react'
 export type FormContextState = {
   isLoading: boolean
   isFormError: boolean
+  mainError: string
   errorState: {
-    main: string
     email: string
     password: string
   }

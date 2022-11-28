@@ -21,10 +21,10 @@ export const Login = ({ validation, authentication }: LoginProps) => {
     isFormError: false,
     email: '',
     password: '',
+    mainError: '',
     errorState: {
       email: '',
-      password: '',
-      main: ''
+      password: ''
     }
   })
 
@@ -32,12 +32,20 @@ export const Login = ({ validation, authentication }: LoginProps) => {
     event.preventDefault()
     if (state.isLoading || state.isFormError) return
 
-    setState((old) => ({ ...old, isLoading: true }))
-    const data = {
-      email: state.email,
-      password: state.password
+    try {
+      setState((old) => ({ ...old, isLoading: true }))
+      const data = {
+        email: state.email,
+        password: state.password
+      }
+      await authentication.auth(data)
+    } catch (error: any) {
+      setState((old) => ({
+        ...old,
+        isLoading: false,
+        mainError: error.message
+      }))
     }
-    await authentication.auth(data)
   }
 
   const validate = (fieldName: string, fieldValue: string) => {
