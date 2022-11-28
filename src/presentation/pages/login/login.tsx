@@ -30,6 +30,8 @@ export const Login = ({ validation, authentication }: LoginProps) => {
 
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (state.isLoading) return
+
     setState((old) => ({ ...old, isLoading: true }))
     const data = {
       email: state.email,
