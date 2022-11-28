@@ -30,7 +30,7 @@ export const Login = ({ validation, authentication }: LoginProps) => {
 
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (state.isLoading) return
+    if (state.isLoading || state.isFormError) return
 
     setState((old) => ({ ...old, isLoading: true }))
     const data = {
