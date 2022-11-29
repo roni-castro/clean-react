@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Footer,
   Input,
@@ -17,6 +17,7 @@ type LoginProps = {
 }
 
 export const Login = ({ validation, authentication }: LoginProps) => {
+  const navigate = useNavigate()
   const [state, setState] = useState<FormContextState>({
     isLoading: false,
     isFormError: false,
@@ -41,6 +42,7 @@ export const Login = ({ validation, authentication }: LoginProps) => {
       }
       const account = await authentication.auth(data)
       localStorage.setItem('accessToken', account.accessToken)
+      navigate('/')
     } catch (error: any) {
       setState((old) => ({
         ...old,
