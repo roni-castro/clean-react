@@ -42,7 +42,7 @@ export const Login = ({ validation, authentication }: LoginProps) => {
       }
       const account = await authentication.auth(data)
       localStorage.setItem('accessToken', account.accessToken)
-      navigate('/')
+      navigate('/', { replace: true })
     } catch (error: any) {
       setState((old) => ({
         ...old,
