@@ -2,7 +2,8 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from './login'
@@ -16,12 +17,13 @@ const makeSut = (params?: SutType) => {
   validationSpy.errorMessage = params?.validationError
   const authenticationSpy = new AuthenticationSpy()
 
+  const history = createMemoryHistory({ initialEntries: ['/login'] })
   const sut = render(
-    <BrowserRouter>
+    <Router location={history.location} navigator={history}>
       <Login validation={validationSpy} authentication={authenticationSpy} />
-    </BrowserRouter>
+    </Router>
   )
-  return { sut, validationSpy, authenticationSpy }
+  return { sut, history, validationSpy, authenticationSpy }
 }
 
 const simulateValidSubmit = async (params?: {
@@ -169,7 +171,7 @@ describe('Login', () => {
   })
 
   it('should save accessToken to localStorage on authentication success', async () => {
-    const { authenticationSpy } = makeSut()
+    const { authenticationSpy, history } = makeSut()
 
     await simulateValidSubmit()
 
@@ -177,14 +179,15 @@ describe('Login', () => {
       'accessToken',
       authenticationSpy.account.accessToken
     )
+    expect(history.location.pathname).toEqual('/')
   })
 
   it('should go to sign up page', async () => {
-    makeSut()
+    const { history } = makeSut()
 
     const signUpLink = screen.getByTestId('signUp')
     await userEvent.click(signUpLink)
 
-    expect(window.location.pathname).toEqual('/signup')
+    expect(history.location.pathname).toEqual('/signup')
   })
 })
