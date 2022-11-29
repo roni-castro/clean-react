@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { faker } from '@faker-js/faker'
+import { BrowserRouter } from 'react-router-dom'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from './login'
@@ -16,7 +17,9 @@ const makeSut = (params?: SutType) => {
   const authenticationSpy = new AuthenticationSpy()
 
   const sut = render(
-    <Login validation={validationSpy} authentication={authenticationSpy} />
+    <BrowserRouter>
+      <Login validation={validationSpy} authentication={authenticationSpy} />
+    </BrowserRouter>
   )
   return { sut, validationSpy, authenticationSpy }
 }
@@ -174,5 +177,14 @@ describe('Login', () => {
       'accessToken',
       authenticationSpy.account.accessToken
     )
+  })
+
+  it('should go to sign up page', async () => {
+    makeSut()
+
+    const signUpLink = screen.getByTestId('signUp')
+    await userEvent.click(signUpLink)
+
+    expect(window.location.pathname).toEqual('/signup')
   })
 })
