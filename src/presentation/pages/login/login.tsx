@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Footer,
   Input,
@@ -101,9 +102,9 @@ export const Login = ({ validation, authentication }: LoginProps) => {
           >
             Entrar
           </button>
-          <a className={Styles.link} href='#'>
+          <Link data-testid='signUp' className={Styles.link} to='/signup'>
             Criar conta
-          </a>
+          </Link>
           <FormStatus data-testid='login' />
         </form>
       </FormContext.Provider>
