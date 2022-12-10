@@ -145,14 +145,12 @@ describe('Login', () => {
     expect(authenticationSpy.callsCount).toBe(1)
   })
 
-  it('should not call Authentication if form is invalid', async () => {
+  it('should not call Authentication if validation fails', async () => {
     const { authenticationSpy } = makeSut({
       validationError: faker.random.words()
     })
 
-    await userEvent.type(screen.getByTestId('email'), faker.internet.email())
-    const submitButton = await screen.findByRole('button', { name: 'Entrar' })
-    await userEvent.click(submitButton)
+    await simulateValidSubmit()
 
     expect(authenticationSpy.callsCount).toBe(0)
   })
