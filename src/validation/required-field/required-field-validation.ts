@@ -8,6 +8,6 @@ export class RequiredFieldValidation implements FieldValidation {
   }
 
   validate(fieldValue: string) {
-    return new RequiredFieldError()
+    return fieldValue ? null : new RequiredFieldError()
   }
 }
