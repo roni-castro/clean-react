@@ -11,7 +11,7 @@ const makeSut = (customValidators: FieldValidationSpy[] = []) => {
   ]
 
   return {
-    sut: new ValidationComposite(fieldValidationsSpy),
+    sut: ValidationComposite.build(fieldValidationsSpy),
     fieldName,
     fieldValidationsSpy
   }
