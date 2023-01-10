@@ -1,29 +1,15 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Login } from '@/presentation/pages'
-import { AuthenticationSpy, ValidationSpy } from '@/presentation/tests'
 
-export default function Router() {
+type RouterProps = {
+  makeLogin: JSX.Element
+}
+
+export default function Router({ makeLogin }: RouterProps) {
   return (
     <Routes>
-      <Route
-        path='/'
-        element={
-          <Login
-            validation={new ValidationSpy()}
-            authentication={new AuthenticationSpy()}
-          />
-        }
-      />
-      <Route
-        path='/login'
-        element={
-          <Login
-            validation={new ValidationSpy()}
-            authentication={new AuthenticationSpy()}
-          />
-        }
-      />
+      <Route path='/' element={makeLogin} />
+      <Route path='/login' element={makeLogin} />
     </Routes>
   )
 }
