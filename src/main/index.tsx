@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from '@/presentation/components'
 import '@/presentation/styles/global.scss'
-import { makeLogin } from './factories/login/login-factory'
+import { makeLogin } from './factories/pages'
 
 const container = document.getElementById('main')
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
